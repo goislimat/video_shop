@@ -4,7 +4,9 @@
     <div class="container">
         <h1>Listagem de Produtos</h1>
         
-        <p><a href="{{ route('products.create') }}" class="btn btn-success">Novo</a></p>
+        <!--<p><a href="{{ route('products.create') }}" class="btn btn-success">Novo</a></p>-->
+        {{ link_to_route('products.create', 'Novo', array(), array('class' => 'btn btn-success')) }}
+        
         
         <table class="table table-condensed">
             <thead>
