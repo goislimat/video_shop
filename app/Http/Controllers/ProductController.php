@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Shop\Http\Requests;
 use Shop\Product;
+use Shop\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -18,7 +19,7 @@ class ProductController extends Controller
     {
         $produtos = Product::all();
         
-        return view('index');
+        return view('products.index', ['produtos' => $produtos]);
     }
 
     /**
@@ -27,8 +28,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {        
+        return view('products.create');
     }
 
     /**
@@ -37,9 +38,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        Product::create($request->all());
+        
+        return redirect()->route('products.index');
     }
 
     /**
@@ -50,7 +53,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $produto = Product::find($id);
+        
+        return view('products.show', ['produto' => $produto]);
     }
 
     /**
@@ -61,7 +66,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produto = Product::find($id);
+        
+        return view('products.edit', ['produto' => $produto]);
     }
 
     /**
@@ -71,9 +78,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        Product::find($id)->update($request->all());
+        
+        return redirect()->route('products.index');
     }
 
     /**
@@ -84,6 +93,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+        
+        return redirect()->route('products.index');
     }
 }
